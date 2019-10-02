@@ -1,0 +1,26 @@
+GET /people_linkedin/_search
+{
+  "query": {
+    "function_score": {
+      "gauss": {
+        "date_of_birth": {
+          "origin": "1991-07-01",
+          "scale": "0d",
+          "offset": "365d"
+        }
+      }
+    }
+  }
+}
+
+GET /people_linkedin/_search
+{
+  "query": {
+    "range": {
+      "date_of_birth": {
+        "gte": "1992-01-01||-1y/d",
+        "lte": "1992-01-01||+1y/d"
+      }
+    }
+  }
+}

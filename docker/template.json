@@ -1,0 +1,96 @@
+{
+    "index_patterns": [
+        "people*"
+    ],
+    "settings": {
+        "number_of_shards": 5,
+        "number_of_replicas": 2,
+        "analysis": {
+            "analyzer": {
+                "gender": {
+                    "type": "custom",
+                    "tokenizer": "kuromoji_tokenizer",
+                    "filter": [
+                        "synonym_dict"
+                    ]
+                },
+                "janpanese": {
+                    "type": "custom",
+                    "tokenizer": "kuromoji_tokenizer"
+                }
+            },
+            "filter": {
+                "synonym_dict": {
+                    "type": "synonym",
+                    "synonyms": [
+                        "男性,男,Male,male,MALE",
+                        "女性,女,Female,FEMALE,female"
+                    ]
+                }
+            }
+        }
+    },
+    "mappings": {
+        "properties": {
+            "id": {
+                "type": "long"
+            },
+            "name": {
+                "type": "text",
+                "analyzer": "janpanese"
+            },
+            "gender": {
+                "type": "text",
+                "analyzer": "gender",
+                "term_vector": "yes"
+            },
+            "date_of_birth": {
+                "type": "date",
+                "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
+            },
+            "city": {
+                "type": "text",
+                "analyzer": "janpanese",
+                "term_vector": "yes"
+            },
+            "last_education": {
+                "type": "text",
+                "analyzer": "janpanese",
+                "term_vector": "yes"
+            },
+            "last_school_name": {
+                "type": "text",
+                "analyzer": "janpanese",
+                "term_vector": "yes"
+            },
+            "education_detail": {
+                "type": "text",
+                "analyzer": "janpanese",
+                "term_vector": "yes"
+            },
+            "last_company": {
+                "type": "text",
+                "analyzer": "janpanese",
+                "term_vector": "yes"
+            },
+            "skill": {
+                "type": "text",
+                "analyzer": "janpanese",
+                "term_vector": "yes"
+            },
+            "work_experience": {
+                "type": "text",
+                "analyzer": "janpanese",
+                "term_vector": "yes"
+            },
+            "url": {
+                "type": "keyword"
+            },
+            "created_at": {
+                "type": "date",
+                "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
+            }
+        }
+    },
+    "version": 3
+}

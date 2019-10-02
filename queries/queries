@@ -1,0 +1,67 @@
+GET /people_linkedin/_search
+{
+  "query": {
+    "more_like_this": {
+      "like": [
+        {
+          "doc": {
+            "gender": "男性",
+            "city": "県横",
+            "last_education": "大学",
+            "work_experience": "開発",
+            "last_school_name": "早稲田"
+          }
+        }
+      ],
+      "min_term_freq": 1,
+      "min_doc_freq": 1,
+      "max_query_terms": 12
+    }
+  }
+}
+
+GET /people_linkedin/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "more_like_this": {
+            "like": [
+              {
+                "doc": {
+                  "gender": "男性",
+                  "city": "県横",
+                  "last_education": "大学",
+                  "work_experience": "開発",
+                  "last_school_name": "早稲田"
+                }
+              }
+            ],
+            "min_term_freq": 1,
+            "min_doc_freq": 1,
+            "max_query_terms": 50
+          }
+        },
+        {
+          "range": {
+            "date_of_birth": {
+              "gte": "1992-01-01||-1y/d",
+              "lte": "1992-01-01||+1y/d"
+            }
+          }
+        },
+        {
+          "match": {
+            "gender": {
+              "query": "男性",
+              "boost": 5
+            }
+            
+          }
+          
+        }
+      ]
+    }
+  }
+}
